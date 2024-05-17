@@ -1,27 +1,40 @@
+// TodoItem.jsx
 import React, { useState } from 'react';
-import TodoEdit from './TodoEdit'; // Importa TodoEdit
- 
  
 function TodoItem({ todo, onDelete, onEdit }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedText, setEditedText] = useState(todo);
+ const [isEditing, setIsEditing] = useState(false);
+ const [newText, setNewText] = useState(todo);
  
-  const handleEdit = (newText) => {
+ const handleEditChange = (e) => {
+    setNewText(e.target.value);
+ };
+ 
+ const handleEditSubmit = () => {
     onEdit(newText);
     setIsEditing(false);
-  };
-  return (
-    <li>
+ };
+ 
+ return (
+   <li>
       {isEditing ? (
-        <TodoEdit todo={editedText} onSave={handleEdit} />
-      ) : (
         <>
-          {todo}
-          <button onClick={() => setIsEditing(true)}>Editar</button>
-          <button onClick={onDelete}>Eliminar</button></>
-      )}
+          <input
+            id="nuevo" 
+            type="text" 
+            value={newText} 
+            onChange={handleEditChange} 
+          />
+          <button id="btngu" onClick={handleEditSubmit}>Guardar</button>
+        </>
+     ) : (
+        <>
+          <span id="texto">{todo}</span>
+          <button id="btnedit" onClick={() => setIsEditing(true)}>Editar</button>
+          <button id="btndelete" onClick={onDelete}>Eliminar</button>
+        </>
+     )}
     </li>
-  );
+ );
 }
  
 export default TodoItem;
